@@ -30,9 +30,15 @@ library("spatialEco")
 #install.packages("broom")
 library("broom")
 
-setwd("C:\\Users\\g.vargas\\BOX\\IIEP_MyProjects\\MP_01000298_RND_SDA\\WorkFiles_Experts\\298-Issue-Papers\\298-Issue-Paper-GWR\\Replication files")
+## SJE: change file path.
+##setwd("C:\\Users\\g.vargas\\BOX\\IIEP_MyProjects\\MP_01000298_RND_SDA\\WorkFiles_Experts\\298-Issue-Papers\\298-Issue-Paper-GWR\\Replication files")
+replication.folder = "/home/stephen/archive/proj/2022/gwr/Replication files"
+setwd(replication.folder)
 
-PolygonShape <- readOGR(dsn = "Data\\Colombia", layer = "GWR - Colombia", drop_unsupported_fields=FALSE, disambiguateFIDs=TRUE)
+## SJE: "Data\\Colombia --> file.path("Data", "Colombia")
+## Using file.path means that folders have correct separator on operating systems.
+
+PolygonShape <- readOGR(dsn = file.path("Data", "Colombia"), layer = "GWR - Colombia", drop_unsupported_fields=FALSE, disambiguateFIDs=TRUE)
 cat(" ")
 cat("The final names of the variables that were imported are the following:")
 
@@ -63,7 +69,7 @@ attach(PolygonShapeTrimmed@data)
 modelOLS <- lm(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]))
 summary(modelOLS)
 tidy_modelOLS <- tidy(modelOLS)
-write.csv(tidy_modelOLS, "Tables\\ModelOLS.csv")
+write.csv(tidy_modelOLS, file.path("Tables", "ModelOLS.csv"))
 
 DependentVariable <- c(ListVariables[[1]])
 # MoransIListVariables <- c(ListVariables[[1]])
@@ -179,7 +185,7 @@ gwr.res <- gwr.basic(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]]
                      kernel = "bisquare", adaptive = TRUE, F123.test = TRUE)
 gwr.res
 
-writeOGR(gwr.res$SDF, "Data\\Colombia", driver="ESRI Shapefile", layer='Results', overwrite_layer = TRUE)
+writeOGR(gwr.res$SDF, file.path("Data", "Colombia"), driver="ESRI Shapefile", layer='Results', overwrite_layer = TRUE)
 names(gwr.res$SDF) 
 
 #spplot(gwr.res$SDF, MurderRate, key.space = "right", 
@@ -222,4 +228,4 @@ spplot(rgwr.res$SDF, ListVariables[[4]], key.space = "right",
        main = "Robust GW regression coefficient estimates for the third independent variable",
        sp.layout = map.layout)
 
-writeOGR(rgwr.res$SDF, "Data\\Colombia", driver="ESRI Shapefile", layer='Results - Robust', overwrite_layer = TRUE)
+writeOGR(rgwr.res$SDF, file.path("Data","Colombia"), driver="ESRI Shapefile", layer='Results - Robust', overwrite_layer = TRUE)
