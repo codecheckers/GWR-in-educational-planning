@@ -19,7 +19,9 @@ manifest:
   - file: codecheck/results/table3.csv
     comment: Data underlying manuscript Table 3
   - file: codecheck/results/code.Rout
-    comment: Output from R code (not in manuscript)
+    comment: Text output from R code (not in manuscript)
+  - file: codecheck/results/Rplots.pdf
+    comment: Graphical output from R code (not in manuscript)
 
 
 codechecker:
