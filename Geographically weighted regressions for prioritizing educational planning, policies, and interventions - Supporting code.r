@@ -229,3 +229,6 @@ spplot(rgwr.res$SDF, ListVariables[[4]], key.space = "right",
        sp.layout = map.layout)
 
 writeOGR(rgwr.res$SDF, file.path("Data","Colombia"), driver="ESRI Shapefile", layer='Results - Robust', overwrite_layer = TRUE)
+
+## Suggestion by SJE: summarise what packages (and their versions) were used
+sessionInfo()
