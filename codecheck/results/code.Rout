@@ -1,0 +1,1069 @@
+
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> options(warn = -1) 
+> #install.packages("GWmodel")
+> library("GWmodel") 
+Loading required package: maptools
+Loading required package: sp
+Checking rgeos availability: TRUE
+Please note that 'maptools' will be retired by the end of 2023,
+plan transition at your earliest convenience;
+some functionality will be moved to 'sp'.
+Loading required package: robustbase
+Loading required package: Rcpp
+Loading required package: spatialreg
+Loading required package: spData
+To access larger datasets in this package, install the spDataLarge
+package with: `install.packages('spDataLarge',
+repos='https://nowosad.github.io/drat/', type='source')`
+Loading required package: Matrix
+Loading required package: sf
+Linking to GEOS 3.9.1, GDAL 3.4.0, PROJ 8.2.0; sf_use_s2() is TRUE
+Welcome to GWmodel version 2.2-8.
+> #install.packages("gwrr")
+> library("gwrr")
+Loading required package: fields
+Loading required package: spam
+Spam version 2.8-0 (2022-01-05) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: ‘spam’
+
+The following object is masked from ‘package:Matrix’:
+
+    det
+
+The following objects are masked from ‘package:base’:
+
+    backsolve, forwardsolve
+
+Loading required package: viridis
+Loading required package: viridisLite
+
+Try help(fields) to get started.
+Loading required package: lars
+Loaded lars 1.2
+
+> #install.packages("sp")
+> library("sp")
+> #install.packages("gstat")
+> library("gstat")
+> #install.packages("ModelMap")
+> library("ModelMap")
+Loading required package: randomForest
+randomForest 4.6-14
+Type rfNews() to see new features/changes/bug fixes.
+Loading required package: raster
+Loading required package: rgdal
+Please note that rgdal will be retired by the end of 2023,
+plan transition to sf/stars/terra functions using GDAL and PROJ
+at your earliest convenience.
+
+rgdal: version: 1.5-28, (SVN revision 1158)
+Geospatial Data Abstraction Library extensions to R successfully loaded
+Loaded GDAL runtime: GDAL 3.4.0, released 2021/11/04
+Path to GDAL shared files: /usr/share/gdal
+GDAL binary built with GEOS: TRUE 
+Loaded PROJ runtime: Rel. 8.2.0, November 1st, 2021, [PJ_VERSION: 820]
+Path to PROJ shared files: /home/stephen/.local/share/proj:/usr/share/proj:/usr/share/proj
+PROJ CDN enabled: FALSE
+Linking to sp version:1.4-6
+To mute warnings of possible GDAL/OSR exportToProj4() degradation,
+use options("rgdal_show_exportToProj4_warnings"="none") before loading sp or rgdal.
+> #install.packages("RColorBrewer")
+> library("RColorBrewer")
+> #install.packages("ape")
+> library("ape")
+Registered S3 method overwritten by 'ape':
+  method   from 
+  plot.mst spdep
+
+Attaching package: ‘ape’
+
+The following objects are masked from ‘package:raster’:
+
+    rotate, zoom
+
+> #install.packages("usdm")
+> library("usdm")
+> #install.packages("rgdal")
+> library("rgdal")
+> #install.packages("tidyr")
+> library("tidyr")
+
+Attaching package: ‘tidyr’
+
+The following object is masked from ‘package:raster’:
+
+    extract
+
+The following objects are masked from ‘package:Matrix’:
+
+    expand, pack, unpack
+
+> #install.packages("MASS")
+> library("MASS")
+
+Attaching package: ‘MASS’
+
+The following objects are masked from ‘package:raster’:
+
+    area, select
+
+> #install.packages("Compositional")
+> library("Compositional")
+> #install.packages("dplyr")
+> library("dplyr")
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:MASS’:
+
+    select
+
+The following objects are masked from ‘package:raster’:
+
+    intersect, select, union
+
+The following object is masked from ‘package:randomForest’:
+
+    combine
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> #install.packages("spatialEco")
+> library("spatialEco")
+
+Attaching package: ‘spatialEco’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+The following object is masked from ‘package:Compositional’:
+
+    divergence
+
+The following object is masked from ‘package:raster’:
+
+    shift
+
+The following object is masked from ‘package:randomForest’:
+
+    combine
+
+The following object is masked from ‘package:spData’:
+
+    elev
+
+> #install.packages("broom")
+> library("broom")
+> 
+> ## SJE: change file path.
+> ##setwd("C:\\Users\\g.vargas\\BOX\\IIEP_MyProjects\\MP_01000298_RND_SDA\\WorkFiles_Experts\\298-Issue-Papers\\298-Issue-Paper-GWR\\Replication files")
+> replication.folder = "/home/stephen/archive/proj/2022/gwr/Replication files"
+> setwd(replication.folder)
+> 
+> ## SJE: "Data\\Colombia --> file.path("Data", "Colombia")
+> ## Using file.path means that folders have correct separator on operating systems.
+> 
+> PolygonShape <- readOGR(dsn = file.path("Data", "Colombia"), layer = "GWR - Colombia", drop_unsupported_fields=FALSE, disambiguateFIDs=TRUE)
+OGR data source with driver: ESRI Shapefile 
+Source: "/home/stephen/archive/proj/2022/gwr/Replication files/Data/Colombia", layer: "GWR - Colombia"
+with 1117 features
+It has 345 fields
+Integer64 fields read as strings:  Key CV_ano CV_Violenc CV_conflic CV_confl_1 CV_confl_2 CV_poblind CV_ocupesp CV_asalt_p CV_incur_p CV_terrori CV_secuest CV_pirater CV_reten_i CV_hostig_ CV_ataq_in CV_ataq_ae CV_acc_sub CV_embosca CV_cont_ar CV_homic_v CV_homic_c CV_homicid CV_homi_tr CV_captura CV_captu_G CV_captu_E CV_captu_F CV_coca CV_o_amena CV_o_despl CV_d_amena CV_d_despl CV_desplaz CV_despl_1 CV_hurto_p CV_hurto_r CV_hurto_a CV_hurto_m CV_hurto_c CV_hurto_e CV_hurto_v CV_hurto E_ano E_pobsimpl E_pobsim_1 E_t_establ E_t_esta_1 E_t_esta_2 E_jornada_ E_jornad_1 E_jornad_2 E_jornad_3 E_jornad_4 E_jornad_5 E_jornad_6 E_jornad_7 E_jornad_8 E_admin_to E_admin__1 E_admin__2 E_admin__3 E_admin_m E_admin_h E_docen_to E_docen_of E_docen_ru E_docen_ur E_docen_pr E_docen__1 E_docen_se E_docen_me E_docen_mp E_docen__2 E_docen_ms E_docen_mm E_docen_hp E_docen__3 E_docen_hs E_docen_hm E_alumn_to E_alumn_of E_alumn_ru E_alumn_ur E_alumn_pr E_alumn__1 E_alumn_se E_alumn_me E_alumn__2 E_alumn__3 E_alumn__4 E_alumn__5 E_alumn__6 E_alumn__7 E_alumn__8 E_alumn__9 E_alumn_10 E_alumn_11 E_alumn_12 E_alumn_13 E_alumn_mp E_alumn_14 E_alumn_ms E_alumn_mm E_alumn_mj E_alumn_hp E_alumn_15 E_alumn_hs E_alumn_hm E_alumn_hj E_n_icfes E_col_tota E_col_to_1 E_col_to_2 E_col_B E_col_C E_col_D E_col_B_o E_col_C_o E_col_D_o E_col_B_ca E_col_C_ca E_col_D_ca GC_coddept GC_codprov GC_ano GC_ao_crea GC_gandina GC_gcaribe GC_gpacifi GC_gorinoq GC_gamazon GC_pobl_ru GC_pobl_ur GC_pobl_to GC_sisben3 GC_sisbe_1 GC_sisbe_2 GC_sisbe_3 GC_sisbe_4 GC_sisbe_5 GC_sisbe_6 GC_sisbe_7 GC_sisbe_8 GC_sisbe_9 GC_areaofi GC_areao_1 GC_altura GC_codmdo GC_mercado G_ano G_DF_p_nal G_DI_p_nal G_SGP_ribe G_IGA_plan G_IGA_sece HS_A�o HS_N�mer HS_N�m_1 HS_N�m_2 HS_N�m_3 HS_N�m_4 HS_Registr HS_Usuario HS_Usuar_1 HS_Total d 
+> cat(" ")
+ > cat("The final names of the variables that were imported are the following:")
+The final names of the variables that were imported are the following:> 
+> colnames(PolygonShape@data)
+  [1] "fid"        "admin0Name" "admin0Pcod" "admin1Name" "admin1Pcod"
+  [6] "admin2Name" "admin2Pcod" "admin2RefN" "admin2AltN" "admin2Al_1"
+ [11] "date"       "validOn"    "validTo"    "Shape_Leng" "Shape_Area"
+ [16] "Key"        "Long"       "Lat"        "MurderRate" "Poverty"   
+ [21] "ProxyGDP"   "ICFES_GPI"  "TransEducP" "TransAlimE" "SISBEN1PC" 
+ [26] "CV_fid"     "CV_ano"     "CV_Violenc" "CV_conflic" "CV_confl_1"
+ [31] "CV_confl_2" "CV_poblind" "CV_ocupesp" "CV_asalt_p" "CV_incur_p"
+ [36] "CV_terrori" "CV_secuest" "CV_pirater" "CV_reten_i" "CV_hostig_"
+ [41] "CV_ataq_in" "CV_ataq_ae" "CV_acc_sub" "CV_embosca" "CV_cont_ar"
+ [46] "CV_homic_v" "CV_homic_c" "CV_homicid" "CV_homi_tr" "CV_captura"
+ [51] "CV_captu_G" "CV_captu_E" "CV_captu_F" "CV_coca"    "CV_o_amena"
+ [56] "CV_o_despl" "CV_d_amena" "CV_d_despl" "CV_desplaz" "CV_despl_1"
+ [61] "CV_hurto_p" "CV_hurto_r" "CV_hurto_a" "CV_hurto_m" "CV_hurto_c"
+ [66] "CV_hurto_e" "CV_hurto_v" "CV_hurto"   "E_fid"      "E_ano"     
+ [71] "E_pobsimpl" "E_pobsim_1" "E_t_establ" "E_t_esta_1" "E_t_esta_2"
+ [76] "E_jornada_" "E_jornad_1" "E_jornad_2" "E_jornad_3" "E_jornad_4"
+ [81] "E_jornad_5" "E_jornad_6" "E_jornad_7" "E_jornad_8" "E_admin_to"
+ [86] "E_admin__1" "E_admin__2" "E_admin__3" "E_admin_m"  "E_admin_h" 
+ [91] "E_docen_to" "E_docen_of" "E_docen_ru" "E_docen_ur" "E_docen_pr"
+ [96] "E_docen__1" "E_docen_se" "E_docen_me" "E_docen_mp" "E_docen__2"
+[101] "E_docen_ms" "E_docen_mm" "E_docen_hp" "E_docen__3" "E_docen_hs"
+[106] "E_docen_hm" "E_alumn_to" "E_alumn_of" "E_alumn_ru" "E_alumn_ur"
+[111] "E_alumn_pr" "E_alumn__1" "E_alumn_se" "E_alumn_me" "E_alumn__2"
+[116] "E_alumn__3" "E_alumn__4" "E_alumn__5" "E_alumn__6" "E_alumn__7"
+[121] "E_alumn__8" "E_alumn__9" "E_alumn_10" "E_alumn_11" "E_alumn_12"
+[126] "E_alumn_13" "E_alumn_mp" "E_alumn_14" "E_alumn_ms" "E_alumn_mm"
+[131] "E_alumn_mj" "E_alumn_hp" "E_alumn_15" "E_alumn_hs" "E_alumn_hm"
+[136] "E_alumn_hj" "E_s11_tota" "E_s11_mate" "E_s11_soci" "E_s11_cien"
+[141] "E_s11_lect" "E_s11_ingl" "E_s11_to_1" "E_s11_to_2" "E_s11_to_3"
+[146] "E_s11_to_4" "E_s11_to_5" "E_s11_to_6" "E_s11_to_7" "E_s11_to_8"
+[151] "E_s11_to_9" "E_s11_to10" "E_s11_to11" "E_s11_to12" "E_s11_to13"
+[156] "E_s11_to14" "E_s11_to15" "E_s11_to16" "E_s11_to17" "E_s11_to18"
+[161] "E_n_icfes"  "E_col_tota" "E_col_to_1" "E_col_to_2" "E_col_B"   
+[166] "E_col_C"    "E_col_D"    "E_col_B_o"  "E_col_C_o"  "E_col_D_o" 
+[171] "E_col_B_ca" "E_col_C_ca" "E_col_D_ca" "GC_fid"     "GC_coddept"
+[176] "GC_codprov" "GC_depto"   "GC_provinc" "GC_municip" "GC_ano"    
+[181] "GC_ao_crea" "GC_act_adm" "GC_gandina" "GC_gcaribe" "GC_gpacifi"
+[186] "GC_gorinoq" "GC_gamazon" "GC_pobl_ru" "GC_pobl_ur" "GC_pobl_to"
+[191] "GC_indrura" "GC_sisben3" "GC_sisbe_1" "GC_sisbe_2" "GC_sisbe_3"
+[196] "GC_sisbe_4" "GC_sisbe_5" "GC_sisbe_6" "GC_sisbe_7" "GC_sisbe_8"
+[201] "GC_sisbe_9" "GC_areaofi" "GC_areao_1" "GC_altura"  "GC_discapi"
+[206] "GC_dismdo"  "GC_disbogo" "GC_codmdo"  "GC_mercado" "GC_distanc"
+[211] "G_fid"      "G_ano"      "G_y_total"  "G_y_corr"   "G_y_corr_t"
+[216] "G_y_corr_1" "G_y_corr_2" "G_y_corr_3" "G_y_corr_4" "G_y_no_tri"
+[221] "G_y_transf" "G_y_tran_1" "G_y_tran_2" "G_g_total"  "G_g_corr"  
+[226] "G_g_func"   "G_g_func_p" "G_g_func_g" "G_g_func_t" "G_g_int_de"
+[231] "G_deficit"  "G_y_cap"    "G_y_cap_re" "G_y_cap_tr" "G_y_cap_co"
+[236] "G_y_cap_ot" "G_g_cap"    "G_g_cap_FB" "G_g_cap_re" "G_deficit_"
+[241] "G_finan"    "G_finan_cr" "G_finan__1" "G_finan__2" "G_finan__3"
+[246] "G_DF_ing_f" "G_DF_deuda" "G_DF_ing_t" "G_DF_ing_p" "G_DF_gast_"
+[251] "G_DF_ahorr" "G_DF_desem" "G_DF_p_nal" "G_DI_efica" "G_DI_efici"
+[256] "G_DI_rlega" "G_DI_capad" "G_DI_gesti" "G_DI_desem" "G_DI_rango"
+[261] "G_DI_p_nal" "G_categori" "G_SGP_tota" "G_SGP_educ" "G_SGP_ed_1"
+[266] "G_SGP_ed_2" "G_SGP_ed_3" "G_SGP_ed_4" "G_SGP_salu" "G_SGP_sa_1"
+[271] "G_SGP_sa_2" "G_SGP_sa_3" "G_SGP_agua" "G_SGP_prop" "G_SGP_pr_1"
+[276] "G_SGP_pr_2" "G_SGP_pr_3" "G_SGP_pr_4" "G_SGP_pr_5" "G_SGP_alim"
+[281] "G_SGP_ribe" "G_SGP_resg" "G_SGP_fp"   "G_SGP_pinf" "G_IGA_tota"
+[286] "G_IGA_org_" "G_IGA_cont" "G_IGA_meci" "G_IGA_co_1" "G_IGA_gest"
+[291] "G_IGA_exp_" "G_IGA_visi" "G_IGA_co_2" "G_IGA_plan" "G_IGA_comp"
+[296] "G_IGA_sui"  "G_IGA_sisb" "G_IGA_sima" "G_IGA_sist" "G_IGA_fut" 
+[301] "G_IGA_rega" "G_IGA_sice" "G_IGA_siga" "G_IGA_sige" "G_IGA_dial"
+[306] "G_IGA_gobi" "G_IGA_gel_" "G_IGA_ge_1" "G_IGA_sece" "G_IGA_si_1"
+[311] "G_IGA_suit" "G_IGA_tran" "G_IGA_si_2" "G_IGA_si_3" "G_IGA_si_4"
+[316] "G_IGA_si_5" "G_IGA_aten" "G_IGA_si_6" "HS_fid"     "HS_A.o"    
+[321] "HS_N.mer"   "HS_Cobertu" "HS_N.m_1"   "HS_N.m_2"   "HS_N.m_3"  
+[326] "HS_N.m_4"   "HS_Cober_1" "HS_Cober_2" "HS_Cober_3" "HS_Cober_4"
+[331] "HS_Cober_5" "HS_Cober_6" "HS_Cober_7" "HS_Cober_8" "HS_Cober_9"
+[336] "HS_Registr" "HS_Usuario" "HS_Usuar_1" "HS_Total.d" "HS_Cober10"
+[341] "HS_Cober11" "Vulnerabil" "Threat"     "Lack_Respo" "INFORM"    
+> 
+> ListVariables <- list("E_s11_to_1", "MurderRate", "ProxyGDP", "Poverty", "SISBEN1PC", "GC_indrura", "Vulnerabil", "Threat", "Lack_Respo", "TransEducP", "TransAlimE", "HS_Cober_7", "HS_Cober_1", "G_IGA_tota", "GC_discapi")
+> 
+> PolygonShapeTrimmed <- PolygonShape[c("Lat", "Long", "admin2Pcod", "E_s11_to_1", "SISBEN1PC", "MurderRate", "ProxyGDP", "Poverty", "GC_indrura", "Vulnerabil", "Threat", "Lack_Respo", "TransEducP", "TransAlimE", "HS_Cober_7", "HS_Cober_1", "G_IGA_tota", "GC_discapi")]
+> PolygonShapeTrimmed <- sp.na.omit(PolygonShapeTrimmed)
+Deleting rows: 24724925325469990894496299010201039104524224825025125225525625891495598510901100111511163569482225538912713615522723024427638145488589893410831099
+
+> 
+> DeVar <- ListVariables[[1]] 
+> InDeVars <- unlist(ListVariables[2:length(ListVariables)], recursive = TRUE, use.names = FALSE)
+> 
+> model.sel <- model.selection.gwr(DeVar ,InDeVars, data = PolygonShapeTrimmed, 
++                                  kernel = "bisquare", adaptive = TRUE, bw = 80) 
+Now calibrating the model: 
+ E_s11_to_1~MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Poverty 
+Now calibrating the model: 
+ E_s11_to_1~SISBEN1PC 
+Now calibrating the model: 
+ E_s11_to_1~GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil 
+Now calibrating the model: 
+ E_s11_to_1~Threat 
+Now calibrating the model: 
+ E_s11_to_1~Lack_Respo 
+Now calibrating the model: 
+ E_s11_to_1~TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~GC_discapi 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+Poverty 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+SISBEN1PC 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+Threat 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+Lack_Respo 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Poverty 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+SISBEN1PC 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Threat 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Poverty 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+SISBEN1PC 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+Poverty 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura+ProxyGDP 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura+ProxyGDP+TransAlimE 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura+ProxyGDP+G_IGA_tota 
+Now calibrating the model: 
+ E_s11_to_1~Vulnerabil+GC_discapi+Lack_Respo+Threat+SISBEN1PC+Poverty+MurderRate+HS_Cober_7+HS_Cober_1+TransEducP+GC_indrura+ProxyGDP+G_IGA_tota+TransAlimE 
+> sorted.models <- model.sort.gwr(model.sel, numVars = length(InDeVars), 
++                                 ruler.vector = model.sel[[2]][,2]) 
+> 
+> model.list <- sorted.models[[1]]
+> 
+> model.view.gwr(DeVar, InDeVars, model.list = model.list)
+> 
+> plot(sorted.models[[2]][,2], col = "black", pch = 20, lty = 5, 
++      main = "Alternative view of GWR model selection procedure", 
++      ylab = "AICc", xlab = "Model number", type = "b")
+> 
+> attach(PolygonShapeTrimmed@data)
+> modelOLS <- lm(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]))
+> summary(modelOLS)
+
+Call:
+lm(formula = as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.9422 -1.6557 -0.0638  1.4837 10.8037 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  4.564e+01  9.593e-01  47.582  < 2e-16 ***
+Vulnerabil  -6.474e-01  8.082e-02  -8.010 3.01e-15 ***
+GC_discapi   2.757e-04  1.494e-03   0.185   0.8536    
+Lack_Respo  -5.360e-02  7.173e-02  -0.747   0.4551    
+Threat       1.207e-01  5.724e-02   2.108   0.0353 *  
+SISBEN1PC   -1.773e+01  3.871e+00  -4.580 5.20e-06 ***
+Poverty      4.197e-02  7.559e-03   5.552 3.56e-08 ***
+MurderRate  -1.156e-02  2.808e-03  -4.116 4.15e-05 ***
+HS_Cober_7   5.764e-03  3.870e-03   1.489   0.1367    
+HS_Cober_1  -5.864e-03  3.409e-03  -1.720   0.0857 .  
+TransEducP   5.273e-07  1.091e-06   0.483   0.6289    
+GC_indrura   1.367e+00  4.869e-01   2.806   0.0051 ** 
+ProxyGDP     3.229e-01  1.293e-01   2.498   0.0127 *  
+G_IGA_tota   6.908e-02  9.178e-03   7.527 1.11e-13 ***
+TransAlimE  -2.082e-04  4.513e-05  -4.613 4.46e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.458 on 1055 degrees of freedom
+Multiple R-squared:  0.4969,	Adjusted R-squared:  0.4902 
+F-statistic: 74.41 on 14 and 1055 DF,  p-value: < 2.2e-16
+
+> tidy_modelOLS <- tidy(modelOLS)
+> write.csv(tidy_modelOLS, file.path("Tables", "ModelOLS.csv"))
+> 
+> DependentVariable <- c(ListVariables[[1]])
+> # MoransIListVariables <- c(ListVariables[[1]])
+> # MoransIListVariables <- append(MoransIListVariables, "Lat")
+> # MoransIListVariables <- append(MoransIListVariables, "Long")
+> PolygonShapeData <- PolygonShapeTrimmed@data
+> PolygonShapeData.dists <- as.matrix(dist(cbind(PolygonShapeData$Long, PolygonShapeData$Lat)))
+> PolygonShapeData.dists.inv <- 1/PolygonShapeData.dists
+> diag(PolygonShapeData.dists.inv) <- 0
+> Moran.I(PolygonShapeData$E_s11_to_1, PolygonShapeData.dists.inv, na.rm=FALSE)
+$observed
+[1] 0.1409368
+
+$expected
+[1] -0.0009354537
+
+$sd
+[1] 0.001783438
+
+$p.value
+[1] 0
+
+> 
+> # gw.ss.bx <- gwss(PolygonShapeTrimmed, PolygonShapeTrimmed, vars = c("E_s11_to_1", "MurderRate", "ProxyGDP", "Poverty"), 
+> #                  kernel = "boxcar", adaptive = TRUE, bw = 48, quantile = TRUE)
+> gw.ss.bx <- gwss(PolygonShapeTrimmed, PolygonShapeTrimmed, vars = c(ListVariables), 
++                  kernel = "boxcar", adaptive = TRUE, bw = 48, quantile = TRUE)
+> 
+> # gw.ss.bs <- gwss(PolygonShapeTrimmed, PolygonShapeTrimmed, vars = c("E_s11_to_1", "MurderRate", "ProxyGDP", "Poverty"), 
+> #                  kernel = "bisquare", adaptive = TRUE, bw = 48)
+> gw.ss.bs <- gwss(PolygonShapeTrimmed, PolygonShapeTrimmed, vars = c(ListVariables), 
++                  kernel = "bisquare", adaptive = TRUE, bw = 48)
+> 
+> map.na = list("SpatialPolygonsRescale", layout.north.arrow(),
++               offset = c(329000,261500), scale = 4000, col=1)
+> map.scale.1 = list("SpatialPolygonsRescale", layout.scale.bar(),
++                    offset = c(326500,217000), scale = 5000, col=1, fill=c("transparent","blue"))
+> map.scale.2  = list("sp.text", c(326500,217900), "0", cex=0.9, col=1)
+> map.scale.3  = list("sp.text", c(331500,217900), "5km", cex=0.9, col=1)
+> map.layout <- list(map.na,map.scale.1,map.scale.2,map.scale.3)
+> 
+> mypalette.1 <- brewer.pal(9, "Reds") 
+> mypalette.2 <- brewer.pal(9, "Blues") 
+> mypalette.3 <- brewer.pal(9, "Greens")
+> 
+> LSD_DepVar <- paste(ListVariables[[1]],"LSD", sep="_")
+> IQR_DepVar <- paste(ListVariables[[1]],"IQR", sep="_")
+> CorrDepVarIndVar1 <- paste("Corr",paste(ListVariables[[1]], ListVariables[[2]], sep="."), sep="_")
+> CorrDepVarIndVar2 <- paste("Corr",paste(ListVariables[[1]], ListVariables[[3]], sep="."), sep="_")
+> SpeRhoDepVarIndVar1 <- paste("Spearman_rho", paste(ListVariables[[1]], ListVariables[[2]], sep="."), sep="_")
+> SpeRhoDepVarIndVar3 <- paste("Spearman_rho", paste(ListVariables[[1]], ListVariables[[4]], sep="."), sep="_")
+> 
+> # spplot(gw.ss.bx$SDF, "E_s11_to_1_LSD", key.space = "right", 
+> #        col.regions = mypalette.1, cuts = 7, 
+> #        main = "GW standard deviations for SABER11 (basic)", sp.layout = map.layout)
+> spplot(gw.ss.bx$SDF, LSD_DepVar, key.space = "right", 
++        col.regions = mypalette.1, pretty=TRUE, cuts=8,
++        main = "GW standard deviations for dependent variable (basic)", sp.layout = map.layout)
+> 
+> # spplot(gw.ss.bx$SDF, "E_s11_to_1_IQR", key.space = "right", 
+> #        col.regions = mypalette.1, cuts = 7, 
+> #        main = "GW inter-quartile ranges for SABER11 (robust)",
+> #        sp.layout = map.layout)
+> spplot(gw.ss.bx$SDF, IQR_DepVar, key.space = "right", 
++        col.regions = mypalette.1, pretty=TRUE, cuts=8,
++        main = "GW inter-quartile ranges for dependent variable (robust)",
++        sp.layout = map.layout)
+> 
+> 
+> 
+> # spplot(gw.ss.bx$SDF, "Corr_E_s11_to_1.MurderRate", key.space = "right", 
+> #        col.regions = mypalette.2, at = c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1), 
+> #        main = "GW correlations: SABER11 and MurderRate (box-car kernel)", 
+> #        sp.layout = map.layout)
+> spplot(gw.ss.bx$SDF, CorrDepVarIndVar1, key.space = "right", 
++        col.regions = mypalette.2, pretty=TRUE, cuts=8,
++        main = "GW correlations: Dependent and first independent variable (box-car kernel)", 
++        sp.layout = map.layout)
+> 
+> 
+> 
+> # spplot(gw.ss.bx$SDF, "Corr_E_s11_to_1.ProxyGDP", key.space = "right", 
+> #        col.regions = mypalette.2, at = c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1), 
+> #        main = "GW correlations: SABER11 and GDP (box-car kernel)", 
+> #        sp.layout = map.layout)
+> spplot(gw.ss.bx$SDF, CorrDepVarIndVar2, key.space = "right", 
++        col.regions = mypalette.2, pretty=TRUE, cuts=8,
++        main = "GW correlations: Dependent and second independent variable (box-car kernel)", 
++        sp.layout = map.layout)
+> 
+> 
+> 
+> 
+> # spplot(gw.ss.bs$SDF, "Spearman_rho_E_s11_to_1.MurderRate",key.space = "right", 
+> #        col.regions = mypalette.3, at = c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1), 
+> #        main = "GW correlations: SABER11 and Murder rate (robust)", 
+> #        sp.layout = map.layout)
+> spplot(gw.ss.bs$SDF, SpeRhoDepVarIndVar1,key.space = "right", 
++        col.regions = mypalette.3, pretty=TRUE, cuts=8, 
++        main = "GW correlations: Dependent and first independent variable (robust)", 
++        sp.layout = map.layout)
+> 
+> 
+> 
+> # spplot(gw.ss.bs$SDF, "Spearman_rho_E_s11_to_1.Poverty",key.space = "right", 
+> #        col.regions = mypalette.3, at = c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1), 
+> #        main = "GW correlations: SABER11 and Poverty (robust)", 
+> #        sp.layout = map.layout)
+> spplot(gw.ss.bs$SDF, SpeRhoDepVarIndVar3,key.space = "right", 
++        col.regions = mypalette.3, pretty=TRUE, cuts=8, 
++        main = "GW correlations: Dependent and third independent variable (robust)", 
++        sp.layout = map.layout)
+> 
+> #bw.gwr.1 <- bw.gwr(whatever_theoretical_model_is_selected, data = PolygonShapeTrimmed, approach = "AICc",
+> #                   kernel = "bisquare", adaptive = TRUE)
+> bw.gwr.1 <- bw.gwr(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]), data = PolygonShapeTrimmed, approach = "AICc",
++                    kernel = "bisquare", adaptive = TRUE)
+Adaptive bandwidth (number of nearest neighbours): 668 AICc value: 4797.465 
+Adaptive bandwidth (number of nearest neighbours): 421 AICc value: 4756.648 
+Adaptive bandwidth (number of nearest neighbours): 266 AICc value: 4755.709 
+Adaptive bandwidth (number of nearest neighbours): 173 AICc value: 4801.078 
+Adaptive bandwidth (number of nearest neighbours): 326 AICc value: 4750.123 
+Adaptive bandwidth (number of nearest neighbours): 361 AICc value: 4750.819 
+Adaptive bandwidth (number of nearest neighbours): 302 AICc value: 4751.859 
+Adaptive bandwidth (number of nearest neighbours): 338 AICc value: 4750.386 
+Adaptive bandwidth (number of nearest neighbours): 315 AICc value: 4750.466 
+Adaptive bandwidth (number of nearest neighbours): 329 AICc value: 4750.222 
+Adaptive bandwidth (number of nearest neighbours): 320 AICc value: 4750.076 
+Adaptive bandwidth (number of nearest neighbours): 320 AICc value: 4750.076 
+> cat("")
+> cat("The optimal adaptative bandwidth is equal to ", bw.gwr.1)
+The optimal adaptative bandwidth is equal to  320> 
+> #gwr.res <- gwr.basic(whatever_theoretical_model_is_selected, data = PolygonShapeTrimmed, bw = bw.gwr.1, 
+> #                     kernel = "bisquare", adaptive = TRUE, F123.test = TRUE)
+> 
+> gwr.res <- gwr.basic(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]), data = PolygonShapeTrimmed, bw = bw.gwr.1, 
++                      kernel = "bisquare", adaptive = TRUE, F123.test = TRUE)
+> gwr.res
+   ***********************************************************************
+   *                       Package   GWmodel                             *
+   ***********************************************************************
+   Program starts at: 2022-01-19 18:30:20 
+   Call:
+   gwr.basic(formula = as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]), 
+    data = PolygonShapeTrimmed, bw = bw.gwr.1, kernel = "bisquare", 
+    adaptive = TRUE, F123.test = TRUE)
+
+   Dependent (y) variable:  E_s11_to_1
+   Independent variables:  Vulnerabil GC_discapi Lack_Respo Threat SISBEN1PC Poverty MurderRate HS_Cober_7 HS_Cober_1 TransEducP GC_indrura ProxyGDP G_IGA_tota TransAlimE
+   Number of data points: 1070
+   ***********************************************************************
+   *                    Results of Global Regression                     *
+   ***********************************************************************
+
+   Call:
+    lm(formula = formula, data = data)
+
+   Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.9422 -1.6557 -0.0638  1.4837 10.8037 
+
+   Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+   (Intercept)  4.564e+01  9.593e-01  47.582  < 2e-16 ***
+   Vulnerabil  -6.474e-01  8.082e-02  -8.010 3.01e-15 ***
+   GC_discapi   2.757e-04  1.494e-03   0.185   0.8536    
+   Lack_Respo  -5.360e-02  7.173e-02  -0.747   0.4551    
+   Threat       1.207e-01  5.724e-02   2.108   0.0353 *  
+   SISBEN1PC   -1.773e+01  3.871e+00  -4.580 5.20e-06 ***
+   Poverty      4.197e-02  7.559e-03   5.552 3.56e-08 ***
+   MurderRate  -1.156e-02  2.808e-03  -4.116 4.15e-05 ***
+   HS_Cober_7   5.764e-03  3.870e-03   1.489   0.1367    
+   HS_Cober_1  -5.864e-03  3.409e-03  -1.720   0.0857 .  
+   TransEducP   5.273e-07  1.091e-06   0.483   0.6289    
+   GC_indrura   1.367e+00  4.869e-01   2.806   0.0051 ** 
+   ProxyGDP     3.229e-01  1.293e-01   2.498   0.0127 *  
+   G_IGA_tota   6.908e-02  9.178e-03   7.527 1.11e-13 ***
+   TransAlimE  -2.082e-04  4.513e-05  -4.613 4.46e-06 ***
+
+   ---Significance stars
+   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+   Residual standard error: 2.458 on 1055 degrees of freedom
+   Multiple R-squared: 0.4969
+   Adjusted R-squared: 0.4902 
+   F-statistic: 74.41 on 14 and 1055 DF,  p-value: < 2.2e-16 
+   ***Extra Diagnostic information
+   Residual sum of squares: 6375.49
+   Sigma(hat): 2.443268
+   AIC:  4978.267
+   AICc:  4978.784
+   BIC:  4099.48
+   ***********************************************************************
+   *          Results of Geographically Weighted Regression              *
+   ***********************************************************************
+
+   *********************Model calibration information*********************
+   Kernel function: bisquare 
+   Adaptive bandwidth: 320 (number of nearest neighbours)
+   Regression points: the same locations as observations are used.
+   Distance metric: Euclidean distance metric is used.
+
+   ****************Summary of GWR coefficient estimates:******************
+                     Min.     1st Qu.      Median     3rd Qu.    Max.
+   Intercept   4.3266e+01  4.6500e+01  4.9779e+01  5.1864e+01 55.4274
+   Vulnerabil -1.2679e+00 -7.0055e-01 -6.2121e-01 -3.4209e-01  0.1576
+   GC_discapi -1.5600e-02 -5.6395e-03 -1.5157e-03  1.8793e-03  0.0105
+   Lack_Respo -6.4644e-01 -3.9612e-01 -1.9071e-01 -5.5824e-02  0.3122
+   Threat     -5.1002e-01 -1.9737e-01 -7.2290e-02  1.0971e-01  0.4118
+   SISBEN1PC  -6.0334e+01 -2.7607e+01 -1.2027e+01 -2.4225e+00 18.5606
+   Poverty    -1.6183e-02  1.4969e-02  3.0852e-02  5.3203e-02  0.1213
+   MurderRate -2.4734e-02 -7.7402e-03 -4.4777e-03  1.1908e-03  0.0144
+   HS_Cober_7 -2.5216e-02 -1.0706e-02 -2.9318e-03  4.7080e-03  0.0230
+   HS_Cober_1 -2.4721e-02 -1.1182e-02  2.5051e-03  6.5540e-03  0.0147
+   TransEducP -4.1503e-06 -1.6671e-06  9.4645e-07  3.0749e-06  0.0000
+   GC_indrura -4.8945e+00 -9.8918e-01  5.5423e-01  1.3441e+00  3.7252
+   ProxyGDP   -5.6169e-01 -7.6080e-02  1.0505e-01  4.1088e-01  0.9605
+   G_IGA_tota -1.3054e-02  2.9568e-02  4.6363e-02  6.6074e-02  0.0919
+   TransAlimE -4.1943e-04 -2.7758e-04 -2.0194e-04 -1.0261e-04  0.0001
+   ************************Diagnostic information*************************
+   Number of data points: 1070 
+   Effective number of parameters (2trace(S) - trace(S'S)): 162.0735 
+   Effective degrees of freedom (n-2trace(S) + trace(S'S)): 907.9265 
+   AICc (GWR book, Fotheringham, et al. 2002, p. 61, eq 2.33): 4750.076 
+   AIC (GWR book, Fotheringham, et al. 2002,GWR p. 96, eq. 4.22): 4590.117 
+   BIC (GWR book, Fotheringham, et al. 2002,GWR p. 61, eq. 2.34): 4263.319 
+   Residual sum of squares: 4068.89 
+   R-square value:  0.6788869 
+   Adjusted R-square value:  0.621502 
+   ******************F test results of GWR calibration********************
+   ---F1 test (Leung et al. 2000)
+    F1 statistic Numerator DF Denominator DF     Pr(>)    
+         0.74159          Inf           1055 2.239e-13 ***
+   ---F2 test (Leung et al. 2000)
+    F2 statistic Numerator DF Denominator DF Pr(>)
+          2.5952     -28.4294           1055   NaN
+   ---F3 test (Leung et al. 2000)
+              F3 statistic Numerator DF Denominator DF     Pr(>)    
+   Intercept       2.31727    397.17500            Inf < 2.2e-16 ***
+   Vulnerabil      2.63093    434.67253            Inf < 2.2e-16 ***
+   GC_discapi      2.60891    349.84095            Inf < 2.2e-16 ***
+   Lack_Respo      1.61818    316.18672            Inf 2.001e-11 ***
+   Threat          2.27177    334.59684            Inf < 2.2e-16 ***
+   SISBEN1PC       3.62863    368.89562            Inf < 2.2e-16 ***
+   Poverty         2.80257    400.92334            Inf < 2.2e-16 ***
+   MurderRate      0.92235    126.41160            Inf    0.7230    
+   HS_Cober_7      1.78191    193.01631            Inf 1.390e-10 ***
+   HS_Cober_1      2.12237    277.85263            Inf < 2.2e-16 ***
+   TransEducP      1.33958     83.28561            Inf    0.0210 *  
+   GC_indrura      2.54794    308.48039            Inf < 2.2e-16 ***
+   ProxyGDP        1.02305    111.16572            Inf    0.4148    
+   G_IGA_tota      1.69754    396.39560            Inf < 2.2e-16 ***
+   TransAlimE      0.85819    224.95483            Inf    0.9394    
+   ---F4 test (GWR book p92)
+    F4 statistic Numerator DF Denominator DF     Pr(>)    
+         0.63821    907.92654           1055 1.906e-12 ***
+
+   ---Significance stars
+   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+   ***********************************************************************
+   Program stops at: 2022-01-19 18:41:47 
+> 
+> writeOGR(gwr.res$SDF, file.path("Data", "Colombia"), driver="ESRI Shapefile", layer='Results', overwrite_layer = TRUE)
+> names(gwr.res$SDF) 
+ [1] "Intercept"     "Vulnerabil"    "GC_discapi"    "Lack_Respo"   
+ [5] "Threat"        "SISBEN1PC"     "Poverty"       "MurderRate"   
+ [9] "HS_Cober_7"    "HS_Cober_1"    "TransEducP"    "GC_indrura"   
+[13] "ProxyGDP"      "G_IGA_tota"    "TransAlimE"    "y"            
+[17] "yhat"          "residual"      "CV_Score"      "Stud_residual"
+[21] "Intercept_SE"  "Vulnerabil_SE" "GC_discapi_SE" "Lack_Respo_SE"
+[25] "Threat_SE"     "SISBEN1PC_SE"  "Poverty_SE"    "MurderRate_SE"
+[29] "HS_Cober_7_SE" "HS_Cober_1_SE" "TransEducP_SE" "GC_indrura_SE"
+[33] "ProxyGDP_SE"   "G_IGA_tota_SE" "TransAlimE_SE" "Intercept_TV" 
+[37] "Vulnerabil_TV" "GC_discapi_TV" "Lack_Respo_TV" "Threat_TV"    
+[41] "SISBEN1PC_TV"  "Poverty_TV"    "MurderRate_TV" "HS_Cober_7_TV"
+[45] "HS_Cober_1_TV" "TransEducP_TV" "GC_indrura_TV" "ProxyGDP_TV"  
+[49] "G_IGA_tota_TV" "TransAlimE_TV" "Local_R2"     
+> 
+> #spplot(gwr.res$SDF, MurderRate, key.space = "right", 
+> #       col.regions = mypalette.2, pretty=TRUE, cuts=8,
+> #       main = "Basic GW regression coefficient estimates for murder rates",
+> #       sp.layout = map.layout)
+> spplot(gwr.res$SDF, ListVariables[[2]], key.space = "right", 
++        col.regions = mypalette.2, pretty=TRUE, cuts=8,
++        main = "Basic GW regression coefficient estimates for the first independent variable",
++        sp.layout = map.layout)
+> 
+> spplot(gwr.res$SDF, ListVariables[[3]], key.space = "right", 
++        col.regions = mypalette.2, pretty=TRUE, cuts=8,
++        main = "Basic GW regression coefficient estimates for the second independent variable",
++        sp.layout = map.layout)
+> 
+> spplot(gwr.res$SDF, ListVariables[[4]], key.space = "right", 
++        col.regions = mypalette.2, pretty=TRUE, cuts=8,
++        main = "Basic GW regression coefficient estimates for the third independent variable",
++        sp.layout = map.layout)
+> 
+> #rgwr.res <- gwr.robust(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]), data = PolygonShapeTrimmed, bw = bw.gwr.1,
+> #                       kernel = "bisquare", adaptive = TRUE, F123.test = TRUE)
+> rgwr.res <- gwr.robust(as.formula(sorted.models[[1]][[length(sorted.models[[1]])]][[1]]), data = PolygonShapeTrimmed, bw = bw.gwr.1,
++                        kernel = "bisquare", adaptive = TRUE, F123.test = TRUE)
+> rgwr.res
+   ***********************************************************************
+   *                       Package   GWmodel                             *
+   ***********************************************************************
+   Program starts at: 2022-01-19 18:55:02 
+   Call:
+   gwr.basic(formula = formula, data = data, bw = bw, kernel = kernel, 
+    adaptive = adaptive, p = p, theta = theta, longlat = longlat, 
+    dMat = dMat, F123.test = F123.test, cv = T, W.vect = W.vect)
+
+   Dependent (y) variable:  E_s11_to_1
+   Independent variables:  Vulnerabil GC_discapi Lack_Respo Threat SISBEN1PC Poverty MurderRate HS_Cober_7 HS_Cober_1 TransEducP GC_indrura ProxyGDP G_IGA_tota TransAlimE
+   Number of data points: 1070
+   ***********************************************************************
+   *                    Results of Global Regression                     *
+   ***********************************************************************
+
+   Call:
+    lm(formula = formula, data = data)
+
+   Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.9422 -1.6557 -0.0638  1.4837 10.8037 
+
+   Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+   (Intercept)  4.564e+01  9.593e-01  47.582  < 2e-16 ***
+   Vulnerabil  -6.474e-01  8.082e-02  -8.010 3.01e-15 ***
+   GC_discapi   2.757e-04  1.494e-03   0.185   0.8536    
+   Lack_Respo  -5.360e-02  7.173e-02  -0.747   0.4551    
+   Threat       1.207e-01  5.724e-02   2.108   0.0353 *  
+   SISBEN1PC   -1.773e+01  3.871e+00  -4.580 5.20e-06 ***
+   Poverty      4.197e-02  7.559e-03   5.552 3.56e-08 ***
+   MurderRate  -1.156e-02  2.808e-03  -4.116 4.15e-05 ***
+   HS_Cober_7   5.764e-03  3.870e-03   1.489   0.1367    
+   HS_Cober_1  -5.864e-03  3.409e-03  -1.720   0.0857 .  
+   TransEducP   5.273e-07  1.091e-06   0.483   0.6289    
+   GC_indrura   1.367e+00  4.869e-01   2.806   0.0051 ** 
+   ProxyGDP     3.229e-01  1.293e-01   2.498   0.0127 *  
+   G_IGA_tota   6.908e-02  9.178e-03   7.527 1.11e-13 ***
+   TransAlimE  -2.082e-04  4.513e-05  -4.613 4.46e-06 ***
+
+   ---Significance stars
+   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+   Residual standard error: 2.458 on 1055 degrees of freedom
+   Multiple R-squared: 0.4969
+   Adjusted R-squared: 0.4902 
+   F-statistic: 74.41 on 14 and 1055 DF,  p-value: < 2.2e-16 
+   ***Extra Diagnostic information
+   Residual sum of squares: 6375.49
+   Sigma(hat): 2.443268
+   AIC:  4978.267
+   AICc:  4978.784
+   BIC:  4099.48
+   ***********************************************************************
+   *          Results of Geographically Weighted Regression              *
+   ***********************************************************************
+
+   *********************Model calibration information*********************
+   Kernel function: bisquare 
+   Adaptive bandwidth: 320 (number of nearest neighbours)
+   Regression points: the same locations as observations are used.
+   Distance metric: Euclidean distance metric is used.
+
+   ****************Summary of GWR coefficient estimates:******************
+                     Min.     1st Qu.      Median     3rd Qu.    Max.
+   Intercept   4.3266e+01  4.6500e+01  4.9779e+01  5.1864e+01 55.4274
+   Vulnerabil -1.2679e+00 -7.0055e-01 -6.2121e-01 -3.4209e-01  0.1576
+   GC_discapi -1.5600e-02 -5.6395e-03 -1.5157e-03  1.8793e-03  0.0105
+   Lack_Respo -6.4644e-01 -3.9612e-01 -1.9071e-01 -5.5824e-02  0.3122
+   Threat     -5.1002e-01 -1.9737e-01 -7.2290e-02  1.0971e-01  0.4118
+   SISBEN1PC  -6.0334e+01 -2.7607e+01 -1.2027e+01 -2.4225e+00 18.5606
+   Poverty    -1.6183e-02  1.4969e-02  3.0852e-02  5.3203e-02  0.1213
+   MurderRate -2.4734e-02 -7.7402e-03 -4.4777e-03  1.1908e-03  0.0144
+   HS_Cober_7 -2.5216e-02 -1.0706e-02 -2.9318e-03  4.7080e-03  0.0230
+   HS_Cober_1 -2.4721e-02 -1.1182e-02  2.5051e-03  6.5540e-03  0.0147
+   TransEducP -4.1503e-06 -1.6671e-06  9.4645e-07  3.0749e-06  0.0000
+   GC_indrura -4.8945e+00 -9.8918e-01  5.5423e-01  1.3441e+00  3.7252
+   ProxyGDP   -5.6169e-01 -7.6080e-02  1.0505e-01  4.1088e-01  0.9605
+   G_IGA_tota -1.3054e-02  2.9568e-02  4.6363e-02  6.6074e-02  0.0919
+   TransAlimE -4.1943e-04 -2.7758e-04 -2.0194e-04 -1.0261e-04  0.0001
+   ************************Diagnostic information*************************
+   Number of data points: 1070 
+   Effective number of parameters (2trace(S) - trace(S'S)): 162.0735 
+   Effective degrees of freedom (n-2trace(S) + trace(S'S)): 907.9265 
+   AICc (GWR book, Fotheringham, et al. 2002, p. 61, eq 2.33): 4750.076 
+   AIC (GWR book, Fotheringham, et al. 2002,GWR p. 96, eq. 4.22): 4590.117 
+   BIC (GWR book, Fotheringham, et al. 2002,GWR p. 61, eq. 2.34): 4263.319 
+   Residual sum of squares: 4068.89 
+   R-square value:  0.6788869 
+   Adjusted R-square value:  0.621502 
+   ******************F test results of GWR calibration********************
+   ---F1 test (Leung et al. 2000)
+    F1 statistic Numerator DF Denominator DF     Pr(>)    
+         0.74159          Inf           1055 2.239e-13 ***
+   ---F2 test (Leung et al. 2000)
+    F2 statistic Numerator DF Denominator DF Pr(>)
+          2.5952     -28.4294           1055   NaN
+   ---F3 test (Leung et al. 2000)
+              F3 statistic Numerator DF Denominator DF     Pr(>)    
+   Intercept       2.31727    397.17500            Inf < 2.2e-16 ***
+   Vulnerabil      2.63093    434.67253            Inf < 2.2e-16 ***
+   GC_discapi      2.60891    349.84095            Inf < 2.2e-16 ***
+   Lack_Respo      1.61818    316.18672            Inf 2.001e-11 ***
+   Threat          2.27177    334.59684            Inf < 2.2e-16 ***
+   SISBEN1PC       3.62863    368.89562            Inf < 2.2e-16 ***
+   Poverty         2.80257    400.92334            Inf < 2.2e-16 ***
+   MurderRate      0.92235    126.41160            Inf    0.7230    
+   HS_Cober_7      1.78191    193.01631            Inf 1.390e-10 ***
+   HS_Cober_1      2.12237    277.85263            Inf < 2.2e-16 ***
+   TransEducP      1.33958     83.28561            Inf    0.0210 *  
+   GC_indrura      2.54794    308.48039            Inf < 2.2e-16 ***
+   ProxyGDP        1.02305    111.16572            Inf    0.4148    
+   G_IGA_tota      1.69754    396.39560            Inf < 2.2e-16 ***
+   TransAlimE      0.85819    224.95483            Inf    0.9394    
+   ---F4 test (GWR book p92)
+    F4 statistic Numerator DF Denominator DF     Pr(>)    
+         0.63821    907.92654           1055 1.906e-12 ***
+
+   ---Significance stars
+   Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+   ***********************************************************************
+   Program stops at: 2022-01-19 19:06:42 
+> 
+> spplot(rgwr.res$SDF, ListVariables[[2]], key.space = "right", 
++        col.regions = mypalette.1, pretty=TRUE, cuts=8,
++        main = "Robust GW regression coefficient estimates for the first independent variable",
++        sp.layout = map.layout)
+> 
+> spplot(rgwr.res$SDF, ListVariables[[3]], key.space = "right", 
++        col.regions = mypalette.2, pretty=TRUE, cuts=8,
++        main = "Robust GW regression coefficient estimates for the second independent variable",
++        sp.layout = map.layout)
+> 
+> spplot(rgwr.res$SDF, ListVariables[[4]], key.space = "right", 
++        col.regions = mypalette.3, pretty=TRUE, cuts=8,
++        main = "Robust GW regression coefficient estimates for the third independent variable",
++        sp.layout = map.layout)
+> 
+> writeOGR(rgwr.res$SDF, file.path("Data","Colombia"), driver="ESRI Shapefile", layer='Results - Robust', overwrite_layer = TRUE)
+> 
+> ## Suggestion by SJE: summarise what packages (and their versions) were used
+> sessionInfo()
+R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Manjaro Linux
+
+Matrix products: default
+BLAS:   /usr/lib/libopenblasp-r0.3.19.so
+LAPACK: /usr/lib/liblapack.so.3.10.0
+
+locale:
+ [1] LC_CTYPE=en_GB.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_GB.UTF-8        LC_COLLATE=en_GB.UTF-8    
+ [5] LC_MONETARY=en_GB.UTF-8    LC_MESSAGES=en_GB.UTF-8   
+ [7] LC_PAPER=en_GB.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] broom_0.7.11        spatialEco_1.3-7    dplyr_1.0.7        
+ [4] Compositional_5.3   MASS_7.3-55         tidyr_1.1.4        
+ [7] usdm_1.1-18         ape_5.6-1           RColorBrewer_1.1-2 
+[10] ModelMap_3.4.0.1    rgdal_1.5-28        raster_3.5-11      
+[13] randomForest_4.6-14 gstat_2.0-8         gwrr_0.2-1         
+[16] lars_1.2            fields_13.3         viridis_0.6.2      
+[19] viridisLite_0.4.0   spam_2.8-0          GWmodel_2.2-8      
+[22] spatialreg_1.2-1    sf_1.0-5            Matrix_1.4-0       
+[25] spData_2.0.1        Rcpp_1.0.7          robustbase_0.93-9  
+[28] maptools_1.1-2      sp_1.4-6           
+
+loaded via a namespace (and not attached):
+  [1] backports_1.4.1       corrplot_0.92         sn_2.0.1             
+  [4] plyr_1.8.6            splines_4.1.2         listenv_0.8.0        
+  [7] ggplot2_3.3.5         digest_0.6.29         htmltools_0.5.2      
+ [10] foreach_1.5.1         SQUAREM_2021.1        gdata_2.18.0         
+ [13] fansi_0.5.0           magrittr_2.0.1        doParallel_1.0.16    
+ [16] bigassertr_0.1.5      bigstatsr_1.5.5       recipes_0.1.17       
+ [19] globals_0.14.0        gower_0.2.2           matrixStats_0.61.0   
+ [22] gmodels_2.18.1        xts_0.12.1            colorspace_2.0-2     
+ [25] xfun_0.29             jsonlite_1.7.2        crayon_1.4.2         
+ [28] flock_0.7             survival_3.2-13       zoo_1.8-9            
+ [31] iterators_1.0.13      glue_1.6.0            PresenceAbsence_1.1.9
+ [34] gtable_0.3.0          ipred_0.9-12          MatrixModels_0.5-0   
+ [37] RcppZiggurat_0.1.6    shape_1.4.6           future.apply_1.8.1   
+ [40] DEoptimR_1.0-10       maps_3.4.0            SparseM_1.81         
+ [43] scales_1.1.1          bigparallelr_0.3.2    DBI_1.1.2            
+ [46] pchc_0.6              tmvnsim_1.0-2         units_0.7-2          
+ [49] foreign_0.8-81        spdep_1.2-1           proxy_0.4-26         
+ [52] dotCall64_1.0-1       stats4_4.1.2          intervals_0.15.2     
+ [55] lava_1.6.10           prodlim_2019.11.13    glmnet_4.1-3         
+ [58] Rfast2_0.1.1          htmlwidgets_1.5.4     FNN_1.1.3            
+ [61] wk_0.6.0              ellipsis_0.3.2        pkgconfig_2.0.3      
+ [64] nnet_7.3-16           deldir_1.0-6          utf8_1.2.2           
+ [67] caret_6.0-90          tidyselect_1.1.1      rlang_0.4.12         
+ [70] reshape2_1.4.4        munsell_0.5.0         tools_4.1.2          
+ [73] generics_0.1.1        NlcOptim_0.6          fastmap_1.1.0        
+ [76] stringr_1.4.0         knitr_1.37            ModelMetrics_1.2.2.2 
+ [79] rgl_0.108.3           HandTill2001_1.0.1    purrr_0.3.4          
+ [82] RANN_2.6.1            s2_1.0.7              emplik_1.1-1         
+ [85] future_1.23.0         nlme_3.1-153          quantreg_5.86        
+ [88] codalm_0.1.2          compiler_4.1.2        bnlearn_4.7          
+ [91] e1071_1.7-9           FlexDir_1.0           spacetime_1.2-5      
+ [94] tibble_3.1.6          gsl_2.1-7.1           Directional_5.2      
+ [97] stringi_1.7.6         lattice_0.20-45       classInt_0.4-3       
+[100] vctrs_0.3.8           pillar_1.6.4          LearnBayes_2.15.1    
+[103] lifecycle_1.0.1       cowplot_1.1.1         data.table_1.14.2    
+[106] conquer_1.2.1         mixture_2.0.4         R6_2.5.1             
+[109] KernSmooth_2.23-20    gridExtra_2.3         parallelly_1.30.0    
+[112] codetools_0.2-18      energy_1.7-8          boot_1.3-28          
+[115] gtools_3.9.2          assertthat_0.2.1      withr_2.4.3          
+[118] rnaturalearth_0.1.0   mnormt_2.0.2          mgcv_1.8-38          
+[121] expm_0.999-6          parallel_4.1.2        terra_1.5-12         
+[124] quadprog_1.5-8        grid_4.1.2            rpart_4.1-15         
+[127] timeDate_3043.102     coda_0.19-4           class_7.3-19         
+[130] Rfast_2.0.4           mda_0.5-2             pROC_1.18.0          
+[133] numDeriv_2016.8-1.1   lubridate_1.8.0      
+> 
+> proc.time()
+     user    system   elapsed 
+14593.919   195.679  4464.355 
