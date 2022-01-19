@@ -1,0 +1,34 @@
+---
+version: https://codecheck.org.uk/spec/config/1.0
+
+paper:
+  title: >
+    Geographically Weighted Regressions for prioritizing educational planning, policies, and interventions
+  authors:
+    - name: Amélie Gagnon
+    - name: Germán Vargas Mesa
+  reference: >
+    IIEP technical note (2021)
+    http://www.iiep.unesco.org/en/publication/geographically-weighted-regressions-prioritizing-educational-planning-policies-and
+
+manifest:
+  - file: codecheck/results/fig4.pdf
+    comment: manuscript Figure 4
+  - file: codecheck/results/fig8.pdf
+    comment: manuscript Figure 8
+  - file: codecheck/results/table3.csv
+    comment: Data underlying manuscript Table 3
+  - file: codecheck/results/code.Rout
+    comment: Output from R code (not in manuscript)
+
+
+codechecker:
+  - name: Stephen J. Eglen
+    ORCID: 0000-0001-8607-8025
+
+summary: >
+  R code for this project was reproducible.
+repository: https://github.com/codecheckers/GWR-in-educational-planning
+check_time: "2022-01-19 10:00:00"
+certificate: 2022-001
+report: https://doi.org/10.5281/zenodo.FIXME
