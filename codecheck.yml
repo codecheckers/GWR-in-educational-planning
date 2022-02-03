@@ -5,8 +5,9 @@ paper:
   title: >
     Geographically Weighted Regressions for prioritizing educational planning, policies, and interventions
   authors:
-    - name: Amélie Gagnon
     - name: Germán Vargas Mesa
+    - name: Amélie A. Gagnon
+      ORCID: 0000-0003-4907-0774
   reference: >
     IIEP technical note (2021)
     http://www.iiep.unesco.org/en/publication/geographically-weighted-regressions-prioritizing-educational-planning-policies-and
