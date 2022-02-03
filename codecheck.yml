@@ -17,7 +17,7 @@ manifest:
     comment: manuscript Figure 4
   - file: codecheck/results/fig8.pdf
     comment: manuscript Figure 8
-  - file: codecheck/results/table3.csv
+  - file: codecheck/results/table2.csv
     comment: Data underlying manuscript Table 2
   - file: codecheck/results/table3.csv
     comment: Data underlying manuscript Table 3
