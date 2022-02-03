@@ -18,6 +18,8 @@ manifest:
   - file: codecheck/results/fig8.pdf
     comment: manuscript Figure 8
   - file: codecheck/results/table3.csv
+    comment: Data underlying manuscript Table 2
+  - file: codecheck/results/table3.csv
     comment: Data underlying manuscript Table 3
   - file: codecheck/results/code.Rout
     comment: Text output from R code (not in manuscript)
