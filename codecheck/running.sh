@@ -11,9 +11,11 @@
 ## Point to the location of the pdf where we are going to copy outputs.
 PDF="/home/stephen/archive/proj/2022/gwr/Replication files/Rplots.pdf"
 
-pdftk ${PDF} cat 1 output results/fig4.pdf
-pdftk ${PDF} cat 2 output results/fig8.pdf
+pdftk ${PDF} cat 1 output results/fig8.pdf
+pdftk ${PDF} cat 2 output results/fig4.pdf
 
+
+cp "/home/stephen/archive/proj/2022/gwr/Replication files/table2.csv" results/table2.csv
 
 cp "/home/stephen/archive/proj/2022/gwr/Replication files/Tables/ModelOLS-codecheck.csv" results/table3.csv
 
