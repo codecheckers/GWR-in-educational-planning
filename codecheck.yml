@@ -15,6 +15,12 @@ paper:
 manifest:
   - file: codecheck/results/fig4.pdf
     comment: manuscript Figure 4
+  - file: codecheck/results/fig5.pdf
+    comment: manuscript Figure 5
+  - file: codecheck/results/fig6.pdf
+    comment: manuscript Figure 6
+  - file: codecheck/results/fig7.pdf
+    comment: manuscript Figure 7
   - file: codecheck/results/fig8.pdf
     comment: manuscript Figure 8
   - file: codecheck/results/table2.csv
