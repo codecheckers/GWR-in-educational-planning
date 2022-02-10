@@ -29,6 +29,8 @@ library("dplyr")
 library("spatialEco")
 #install.packages("broom")
 library("broom")
+#install.packages("pastecs") 
+library("pastecs")
 
 ## SJE: change file path.
 ##setwd("C:\\Users\\g.vargas\\BOX\\IIEP_MyProjects\\MP_01000298_RND_SDA\\WorkFiles_Experts\\298-Issue-Papers\\298-Issue-Paper-GWR\\Replication files")
@@ -48,6 +50,10 @@ ListVariables <- list("E_s11_to_1", "MurderRate", "ProxyGDP", "Poverty", "SISBEN
 
 PolygonShapeTrimmed <- PolygonShape[c("Lat", "Long", "admin2Pcod", "E_s11_to_1", "SISBEN1PC", "MurderRate", "ProxyGDP", "Poverty", "GC_indrura", "Vulnerabil", "Threat", "Lack_Respo", "TransEducP", "TransAlimE", "HS_Cober_7", "HS_Cober_1", "G_IGA_tota", "GC_discapi")]
 PolygonShapeTrimmed <- sp.na.omit(PolygonShapeTrimmed)
+
+VariablesToSummarize <- PolygonShapeTrimmed[c("E_s11_to_1", "SISBEN1PC", "MurderRate", "ProxyGDP", "Poverty", "GC_indrura", "Vulnerabil", "Threat", "Lack_Respo", "TransEducP", "TransAlimE", "HS_Cober_7", "HS_Cober_1", "G_IGA_tota", "GC_discapi")]@data
+tbl2.data <- stat.desc(VariablesToSummarize)
+write.csv(t(tbl2.data), "table2.csv")
 
 DeVar <- ListVariables[[1]] 
 InDeVars <- unlist(ListVariables[2:length(ListVariables)], recursive = TRUE, use.names = FALSE)
