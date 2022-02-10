@@ -56,6 +56,8 @@ latex_summary_of_manifest(metadata, manifest_df, root)
 ```
 
 
+\clearpage
+
 # Summary
 
 The code could re-run successfully.
@@ -146,7 +148,8 @@ is different.  Also, post-processing of the figures (e.g. the legend in
 the bottom left and the circle in the top-right) was not reproduced
 here.  There are some minor differences observed however, for example
 in Figure 6, the statistically-signifanct regions in the middle of
-Colombia appear slightly different.
+Colombia appear slightly different.  Also, figure 7 seemed to be
+cropped at the top somehow, but the major points of the figure are present.
 
 
 
