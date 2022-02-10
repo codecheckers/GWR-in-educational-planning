@@ -29,6 +29,7 @@ install.packages("Compositional") #takes ~ 10 mins
 install.packages("dplyr")
 install.packages("spatialEco")
 install.packages("broom")
+install.packages("pastecs")
 
 install.packages("GWmodel")
 
@@ -49,3 +50,4 @@ library("dplyr")
 library("spatialEco")
 library("broom")
 library("GWmodel") 
+library("pastecs")
