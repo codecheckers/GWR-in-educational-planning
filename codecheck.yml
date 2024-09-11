@@ -8,9 +8,7 @@ paper:
     - name: Germán Vargas Mesa
     - name: Amélie A. Gagnon
       ORCID: 0000-0003-4907-0774
-  reference: >
-    IIEP technical note (2021)
-    http://www.iiep.unesco.org/en/publication/geographically-weighted-regressions-prioritizing-educational-planning-policies-and
+  reference: http://www.iiep.unesco.org/en/publication/geographically-weighted-regressions-prioritizing-educational-planning-policies-and
 
 manifest:
   - file: codecheck/results/fig4.pdf
